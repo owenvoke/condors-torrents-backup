@@ -29,9 +29,7 @@
             $statement->bind_param('s', $search);
         } else {
             $conditions = advSearch($search);
-            // $conditions = 'title = ?'; $s = "%$search%";
             $statement = $mysqli->prepare('SELECT * FROM torrents WHERE ' . $conditions);
-            // $statement->bind_param('s', $s);
         }
         $statement->execute();
         $statement->bind_result($id, $et_id, $hash, $title);
