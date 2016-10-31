@@ -22,7 +22,7 @@ foreach ($data->channel->item as $d) {
     $stmtSelect->bind_result($exists);
     $stmtSelect->fetch();
     if ($exists === 0) {
-        $stmtInsert->bind_param("iss", $d->$d->title, $d->info_hash);
+        $stmtInsert->bind_param("iss", $d->et_id, $d->title, $d->info_hash);
         $stmtInsert->execute();
         $added = $added + 1;
     }
