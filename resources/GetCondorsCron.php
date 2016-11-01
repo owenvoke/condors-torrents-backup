@@ -11,24 +11,37 @@ $data = json_encode(simplexml_load_string(
     )
 );
 $data = json_decode($data);
-$stmtSelect = $mysqli->prepare("SELECT COUNT(*) FROM torrents WHERE et_id = ?");
-$stmtInsert = $mysqli->prepare("INSERT INTO torrents (et_id, torrent_hash, title) VALUES (?, ?, ?)");
-$added = 0;
+$added = $failed = 0;
+$new = [];
 foreach ($data->channel->item as $d) {
-    $d->et_id = explode('/', $d->link)[4];
+    $d->et_id = (int)$mysqli->escape_string(explode('/', $d->link)[4]);
 
+    $stmtSelect = $mysqli->prepare("SELECT COUNT(*) FROM torrents WHERE et_id = ?");
     $stmtSelect->bind_param("i", $d->et_id);
     $stmtSelect->execute();
     $stmtSelect->bind_result($exists);
     $stmtSelect->fetch();
-    if ($exists === 0) {
-        $stmtInsert->bind_param("iss", $d->et_id, $d->title, $d->info_hash);
-        $stmtInsert->execute();
-        $added = $added + 1;
+    $stmtSelect->close();
+    $d->title = $mysqli->escape_string(str_replace('.', ' ', $d->title));
+    if ($exists < 1) {
+        $stmtInsert = $mysqli->prepare("INSERT INTO torrents (et_id, torrent_hash, title) VALUES (?, ?, ?)");
+        $stmtInsert->bind_param("iss", $d->et_id, $d->info_hash, $d->title);
+        if ($stmtInsert->execute()) {
+            $added = $added + 1;
+            $new[] = str_replace('.', ' ', $d->title);
+        }
+        else {
+            echo $stmtInsert->error;
+            $failed = $failed + 1;
+        }
+        $stmtInsert->close();
     }
 }
 echo json_encode(
     (object)[
-        "added" => $added
+        "added" => $added,
+        "new" => $new,
+        "failed" => $failed
     ],
-    JSON_PRETTY_PRINT);
+    JSON_PRETTY_PRINT
+);
