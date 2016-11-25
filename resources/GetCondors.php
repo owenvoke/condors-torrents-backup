@@ -14,7 +14,6 @@ for ($j = 1; $j < 18; $j++) {
         ];
     }
     file_put_contents("./output.json", json_encode($full_list, JSON_PRETTY_PRINT));
-    sleep(5);
 }
 
 function grab($url)
