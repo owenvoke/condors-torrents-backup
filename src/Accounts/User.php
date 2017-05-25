@@ -36,7 +36,7 @@ class User
                 }
                 unset($user);
             }
-            $db->query('USE `Condors-torrents`');
+            $db->query('USE `condors-torrents`');
         } else {
             $this->acl = Accounts\ACL::ANON;
         }
