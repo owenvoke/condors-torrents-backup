@@ -45,28 +45,12 @@ table.table tr td {
     text-align: left;
 }
 
-.date-column {
-    width: 10%;
-    max-width: none;
-    text-wrap: none;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    text-align: right;
-}
-
 .hash-column {
     max-width: 0;
     text-wrap: none;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
-}
-
-.size-column {
-    width: 8em;
-    text-wrap: none;
-    white-space: nowrap;
 }
 
 .magnet-column {
