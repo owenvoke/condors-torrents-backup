@@ -11,11 +11,9 @@
     </div>
     <div class="years form-group condors-blue">
         <ul>
-            <li><a href="/search?q=2015">2015</a></li>
-            <li><a href="/search?q=2014">2014</a></li>
-            <li><a href="/search?q=2013">2013</a></li>
-            <li><a href="/search?q=2012">2012</a></li>
-            <li><a href="/search?q=2011">2011</a></li>
+            {foreach $data->years as $year}
+                <li><a href="/search?q={$year}">{$year}</a></li>
+            {/foreach}
         </ul>
     </div>
 </div>
