@@ -24,7 +24,7 @@ class Router
         $route->any('/torrent/{id}:([0-9]+)', ['pxgamer\CondorsTorrents\Modules\Torrents\Controller', 'show']);
 
         // Route fallback for page not found
-        $route->any('/*', ['pxgamer\CondorsTorrents\Modules\Base\Controller', 'error_not_found']);
+        $route->any('/*', ['pxgamer\CondorsTorrents\Modules\Base\Controller', 'errorNotFound']);
 
         $route->end();
     }

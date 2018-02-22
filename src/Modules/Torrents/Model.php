@@ -102,7 +102,7 @@ class Model
                 '&language=en-US&page=1&include_adult=false' .
                 '&api_key=' . Config\App::TMDB_API_KEY;
 
-            $response = self::curl_it($url);
+            $response = self::curlIt($url);
 
             if ($response->success) {
                 $json = json_decode($response->response);
@@ -117,7 +117,7 @@ class Model
 
         $url = 'https://api.themoviedb.org/3/movie/' . $tmdb_id . '?language=en-US&api_key=' . Config\App::TMDB_API_KEY;
 
-        $response = self::curl_it($url);
+        $response = self::curlIt($url);
 
         if ($response->success) {
             $stmt = $db->prepare('INSERT INTO tmdb_data (tmdb_id, tmdb_data) VALUES (:tmdb_id, :tmdb_data)');
@@ -136,7 +136,7 @@ class Model
         return null;
     }
 
-    public static function curl_it($url)
+    public static function curlIt($url)
     {
         $status = new \stdClass();
         $status->success = false;
